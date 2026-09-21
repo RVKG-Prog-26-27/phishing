@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="lv">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Latvian Email Security</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+<div class="container">
+
+    <header>
+        <div class="shield">🛡️</div>
+
+        <h1>Latvian Email Security</h1>
+
+        <p>
+            Mākslīgā intelekta e-pastu drošības analīze
+        </p>
+    </header>
+
+
+    <main>
+
+        <form method="POST">
+
+            <label for="subject">
+                E-pasta tēma
+            </label>
+
+            <input
+                type="text"
+                id="subject"
+                name="subject"
+                placeholder="Piemēram: Nepieciešama konta pārbaude"
+                required
+            >
+
+
+            <label for="message">
+                E-pasta teksts
+            </label>
+
+            <textarea
+                id="message"
+                name="message"
+                placeholder="Ievadiet e-pasta tekstu..."
+                required
+            ></textarea>
+
+
+            <button type="submit">
+                🔍 Analizēt e-pastu
+            </button>
+
+        </form>
+
+
+        {% if result %}
+
+        <section class="result">
+
+            {% if result.prediction == "phishing" %}
+
+                <div class="warning">
+                    <div class="result-icon">⚠️</div>
+
+                    <h2>
+                        IESPĒJAMA PIKŠĶERĒŠANAS VĒSTULE
+                    </h2>
+
+                    <p>
+                        Modelis ir identificējis iespējamas
+                        pikšķerēšanas pazīmes.
+                    </p>
+                </div>
+
+            {% else %}
+
+                <div class="safe">
+                    <div class="result-icon">✅</div>
+
+                    <h2>
+                        VĒSTULE IZSKATĀS DROŠA
+                    </h2>
+
+                    <p>
+                        Modelis nav identificējis būtiskas
+                        pikšķerēšanas pazīmes.
+                    </p>
+                </div>
+
+            {% endif %}
+
+
+            <div class="probabilities">
+
+                <div class="probability">
+
+                    <div class="probability-title">
+                        Phishing
+                    </div>
+
+                    <div class="percentage">
+                        {{ result.phishing_probability }}%
+                    </div>
+
+                    <div class="bar">
+                        <div
+                            class="bar-fill phishing-bar"
+                            style="width: {{ result.phishing_probability }}%"
+                        ></div>
+                    </div>
+
+                </div>
+
+
+                <div class="probability">
+
+                    <div class="probability-title">
+                        Normal
+                    </div>
+
+                    <div class="percentage">
+                        {{ result.normal_probability }}%
+                    </div>
+
+                    <div class="bar">
+                        <div
+                            class="bar-fill normal-bar"
+                            style="width: {{ result.normal_probability }}%"
+                        ></div>
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            {% if result.threats %}
+
+            <div class="threats">
+
+                <h3>
+                    🔎 Iespējamās draudu pazīmes
+                </h3>
+
+                <ul>
+
+                    {% for threat in result.threats %}
+
+                    <li>
+                        {{ threat }}
+                    </li>
+
+                    {% endfor %}
+
+                </ul>
+
+            </div>
+
+            {% endif %}
+
+
+            <div class="recommendation">
+
+                <h3>
+                    💡 Ieteikums
+                </h3>
+
+                <p>
+                    Neievadiet paroles vai personas datus
+                    aizdomīgās vietnēs un neatveriet
+                    neuzticamus pielikumus.
+                </p>
+
+            </div>
+
+        </section>
+
+        {% endif %}
+
+    </main>
+
+
+    <footer>
+        Latvian Email Security • Alpha 1.0
+    </footer>
+
+</div>
+
+</body>
+</html>
