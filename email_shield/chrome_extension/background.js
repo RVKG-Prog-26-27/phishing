@@ -1,0 +1,1 @@
+console.log("Latvian Email Security started");

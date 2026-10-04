@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+
+<html lang="lv">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+```
+<title>Email shield</title>
+
+<style>
+    * {
+        box-sizing: border-box;
+    }
+
+    body {
+        margin: 0;
+        min-height: 100vh;
+        font-family: Arial, Helvetica, sans-serif;
+        background: linear-gradient(135deg, #eef4ff, #f7f9fc);
+        color: #1f2937;
+    }
+
+    .page {
+        width: 100%;
+        max-width: 900px;
+        margin: 0 auto;
+        padding: 55px 20px;
+    }
+
+    .header {
+        text-align: center;
+        margin-bottom: 35px;
+    }
+
+    .logo {
+        width: 62px;
+        height: 62px;
+        margin: 0 auto 18px;
+        border-radius: 18px;
+        background: linear-gradient(135deg, #2563eb, #4f46e5);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 30px;
+        box-shadow: 0 10px 25px rgba(37, 99, 235, 0.25);
+    }
+
+    h1 {
+        margin: 0;
+        font-size: 32px;
+        color: #111827;
+    }
+
+    .subtitle {
+        margin-top: 10px;
+        color: #6b7280;
+        font-size: 15px;
+    }
+
+    .card {
+        background: white;
+        border-radius: 20px;
+        padding: 30px;
+        box-shadow: 0 12px 35px rgba(15, 23, 42, 0.08);
+        border: 1px solid #e5e7eb;
+    }
+
+    .field {
+        margin-bottom: 22px;
+    }
+
+    label {
+        display: block;
+        margin-bottom: 8px;
+        font-size: 14px;
+        font-weight: 700;
+        color: #374151;
+    }
+
+    input,
+    textarea {
+        width: 100%;
+        border: 1px solid #d1d5db;
+        border-radius: 12px;
+        padding: 13px 15px;
+        font-family: inherit;
+        font-size: 14px;
+        outline: none;
+        transition: 0.2s;
+        background: #f9fafb;
+    }
+
+    input:focus,
+    textarea:focus {
+        border-color: #2563eb;
+        background: white;
+        box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+    }
+
+    textarea {
+        min-height: 180px;
+        resize: vertical;
+    }
+
+    button {
+        width: 100%;
+        border: none;
+        border-radius: 12px;
+        padding: 14px;
+        background: linear-gradient(135deg, #2563eb, #4f46e5);
+        color: white;
+        font-size: 15px;
+        font-weight: 700;
+        cursor: pointer;
+        transition: 0.2s;
+    }
+
+    button:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 8px 20px rgba(37, 99, 235, 0.25);
+    }
+
+    .result {
+        margin-top: 25px;
+        padding: 22px;
+        border-radius: 16px;
+        background: #f8fafc;
+        border: 1px solid #e5e7eb;
+    }
+
+    .result-title {
+        margin: 0 0 15px;
+        font-size: 18px;
+        color: #111827;
+    }
+
+    .category {
+        display: inline-block;
+        padding: 7px 13px;
+        border-radius: 20px;
+        color: white;
+        font-size: 12px;
+        font-weight: 700;
+        letter-spacing: 0.3px;
+    }
+
+    .normal {
+        background: #16a34a;
+    }
+
+    .advertising {
+        background: #2563eb;
+    }
+
+    .spam {
+        background: #f59e0b;
+    }
+
+    .phishing {
+        background: #dc2626;
+    }
+
+    .threats {
+        margin-top: 18px;
+    }
+
+    .threats ul {
+        margin: 8px 0 0;
+        padding-left: 20px;
+    }
+
+    .threats li {
+        margin-bottom: 6px;
+        color: #4b5563;
+    }
+
+    .footer {
+        text-align: center;
+        margin-top: 25px;
+        color: #9ca3af;
+        font-size: 12px;
+    }
+
+    @media (max-width: 600px) {
+        .page {
+            padding: 30px 15px;
+        }
+
+        .card {
+            padding: 22px;
+        }
+
+        h1 {
+            font-size: 26px;
+        }
+    }
+</style>
+```
+
+</head>
+
+<body>
+
+<div class="page">
+
+```
+<div class="header">
+    <div class="logo">✉</div>
+
+    <h1>Latvian Email Security</h1>
+
+    <div class="subtitle">
+        E-pasta drošības un klasifikācijas sistēma
+    </div>
+</div>
+
+<div class="card">
+
+    <form method="POST">
+
+        <div class="field">
+            <label for="subject">E-pasta tēma</label>
+
+            <input
+                type="text"
+                id="subject"
+                name="subject"
+                placeholder="Ievadi e-pasta tēmu..."
+                required
+            >
+        </div>
+
+        <div class="field">
+            <label for="message">E-pasta teksts</label>
+
+            <textarea
+                id="message"
+                name="message"
+                placeholder="Ievadi e-pasta tekstu..."
+                required
+            ></textarea>
+        </div>
+
+        <button type="submit">
+            Analizēt e-pastu
+        </button>
+
+    </form>
+
+    {% if result %}
+
+    <div class="result">
+
+        <h2 class="result-title">
+            Analīzes rezultāts
+        </h2>
+
+        <p>
+            <strong>Kategorija:</strong>
+
+            {% if result.prediction == "normal" %}
+                <span class="category normal">NORMAL</span>
+
+            {% elif result.prediction == "advertising" %}
+                <span class="category advertising">ADVERTISING</span>
+
+            {% elif result.prediction == "spam" %}
+                <span class="category spam">SPAM</span>
+
+            {% elif result.prediction == "phishing" %}
+                <span class="category phishing">PHISHING</span>
+
+            {% else %}
+                <span class="category">
+                    {{ result.prediction|upper }}
+                </span>
+            {% endif %}
+        </p>
+
+        {% if result.threats %}
+
+        <div class="threats">
+
+            <strong>Konstatētās draudu pazīmes:</strong>
+
+            <ul>
+                {% for threat in result.threats %}
+                    <li>{{ threat }}</li>
+                {% endfor %}
+            </ul>
+
+        </div>
+
+        {% else %}
+
+        <div class="threats">
+            <strong>Draudu pazīmes:</strong>
+            <ul>
+                <li>Draudu pazīmes nav atrastas.</li>
+            </ul>
+        </div>
+
+        {% endif %}
+
+    </div>
+
+    {% endif %}
+
+</div>
+
+<div class="footer">
+    Email shield · Email classification system
+</div>
+```
+
+</div>
+
+</body>
+</html>
