@@ -284,3 +284,40 @@ Ja šo failu nav, modeli nepieciešams izveidot no jauna, palaižot:
 ```powershell
 py train_model.py
 ```
+## Testēšanas rezultāti
+
+### 1. Klasifikācijas rezultātu matrica
+
+| Īstā kategorija ↓ / Prognozētā kategorija → | Normal | Advertising | Spam | Phishing | Pareizi noteikts |
+|---|---:|---:|---:|---:|---:|
+| Normal | 10 | 0 | 0 | 0 | 10 |
+| Advertising | 0 | 1 | 0 | 0 | 1 |
+| Spam | 1 | 1 | 6 | 0 | 6 |
+| Phishing | 0 | 0 | 0 | 1 | 1 |
+
+### 2. Klasifikācijas kvalitātes rādītāji
+
+- **Precision** = pareizi noteiktās kategorijas vēstules / visas modelim piešķirtās šīs kategorijas vēstules.
+- **Recall** = pareizi noteiktās kategorijas vēstules / visas reālās šīs kategorijas vēstules.
+- **Accuracy** = visu pareizi klasificēto vēstuļu skaits / kopējais vēstuļu skaits.
+
+| Kategorija | Precision | Recall | Accuracy |
+|---|---:|---:|---:|
+| Normal | 90% | 100% | 95% |
+| Advertising | 50% | 100% | 95% |
+| Spam | 100% | 75% | 90% |
+| Phishing | 100% | 100% | 100% |
+
+### 3. Kopējais rezultāts
+
+**Overall Accuracy = 18/20 × 100 = 90%**
+
+Testēšanas laikā tika pārbaudīti 20 e-pasti četrās kategorijās. Modelis pareizi klasificēja 18 e-pastus, sasniedzot 90% kopējo Accuracy.
+
+Galvenie secinājumi:
+
+Normal un Phishing kategoriju Recall sasniedza 100%.
+Advertising kategorijas Precision bija 50%, tāpēc nepieciešams uzlabot reklāmu atšķiršanu no citām kategorijām.
+Spam kategorijas Recall bija 75%, kas norāda uz dažām klasifikācijas kļūdām.
+
+Secinājums: Modelis spēj klasificēt e-pastus četrās kategorijās, sasniedzot 90% kopējo Accuracy. Turpmāk nepieciešams uzlabot Advertising un Spam kategoriju atpazīšanu.
